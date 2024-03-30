@@ -23,27 +23,27 @@ public class LoginTimMais extends BasePage {
     By entrar = By.xpath("//android.widget.Button[@content-desc=\"Entrar\"]");
 
 
-    public void loginInApp() throws InterruptedException {
-        clicar(By.xpath("//android.view.View[@content-desc=\"Começar a usar\"]"));
-        boolean allow = existeElementoPorTexto("Allow");
-
-        if (allow){
-            clicarPorTexto("Allow");
-        }
-
-        clicar(By.xpath("//android.widget.Button[@content-desc=\"Entrar no TIM MAIS\"]"));
+    public void addMsisdn(){
         clicar(msisdnInput);
-        escrever(msisdnInput, "34991466160");
+        escrever(msisdnInput, "11140000513");
+    }
+
+    public void continuarButton(){
         clicar(continuarButton);
+    }
+
+    public void inserirMsisdn(){
         clicar(passwordInput);
         escrever(passwordInput, "0000");
         clicar(manterMe);
-        clicarEntrar();
+    }
+
+    public void welcomeHome() throws InterruptedException {
         clicar(pularOnboarding);
         Thread.sleep(500);
         clicar(pularTutorial);
 //        vaidarConteudoChar(destaques,"Destaques");
-//        Thread.sleep(2000);
+        Thread.sleep(2000);
     }
 
 

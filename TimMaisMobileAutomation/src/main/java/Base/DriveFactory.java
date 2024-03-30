@@ -25,7 +25,7 @@ public class DriveFactory {
         desiredCapabilities.setCapability("appium:automationName","uiautomator2");
 //        desiredCapabilities.setCapability("appium:appPackage","br.com.timbrasil.timmais.dev");
 //        desiredCapabilities.setCapability("appium:appActivity","com.example.base_app.MainActivity");
-        desiredCapabilities.setCapability("appium:appPackage","br.com.timbrasil.timmais");
+        desiredCapabilities.setCapability("appium:appPackage","br.com.timbrasil.timmais.dev");
         desiredCapabilities.setCapability("appium:appActivity","com.example.base_app.MainActivity");
         try {
             URL appiumServerURL = new URL("http://127.0.0.1:4723/wd/hub");
