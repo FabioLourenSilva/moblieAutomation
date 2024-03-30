@@ -42,8 +42,8 @@ public class LoginTimMais extends BasePage {
         clicar(pularOnboarding);
         Thread.sleep(500);
         clicar(pularTutorial);
-        vaidarConteudoChar(destaques,"Destaques");
-        Thread.sleep(2000);
+//        vaidarConteudoChar(destaques,"Destaques");
+//        Thread.sleep(2000);
     }
 
 

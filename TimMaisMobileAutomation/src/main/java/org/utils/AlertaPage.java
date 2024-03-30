@@ -1,4 +1,4 @@
-package Pages;
+package org.utils;
 
 import Base.BasePage;
 

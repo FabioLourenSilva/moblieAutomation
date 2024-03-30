@@ -1,7 +1,7 @@
-package Testes;
+package org.utils;
 
-import Pages.MenuPage;
-import Pages.WebViewPage;
+import org.utils.MenuPage;
+import org.utils.WebViewPage;
 import Base.BaseTest;
 import org.junit.After;
 import org.junit.Test;
