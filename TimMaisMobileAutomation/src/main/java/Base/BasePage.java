@@ -1,11 +1,13 @@
 package Base;
 
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+
 import java.time.Duration;
 import java.util.List;
 import static Base.DriveFactory.getDriver;
@@ -17,6 +19,11 @@ public class BasePage {
                 .sendKeys(texto);
     }
 
+    public void escreverId(By by, String texto){
+        getDriver().findElement(by)
+                .sendKeys(texto);
+    }
+
     public void escreverNumero(By by, String numero){
         getDriver().findElement(by)
                 .sendKeys(numero);
@@ -24,6 +31,10 @@ public class BasePage {
 
     public String obterTexto(By by){
         return getDriver().findElement(by).getText();
+    }
+
+    public void clicarId(By by){
+        getDriver().findElement(by).click();
     }
 
     public void clicar(By by){
@@ -63,6 +74,20 @@ public class BasePage {
         System.out.println("Conteudo esperado:"+conteudo);
     }
 
+    public void validarConteudoID(String accessibilityId, String expectedText) {
+        try {
+            MobileElement element = getDriver().findElementByAccessibilityId(accessibilityId);
+            String textoAPP = element.getText();
+//            assertEquals(expectedText, textoAPP, "");
+            assertEquals(expectedText,textoAPP);
+            System.out.println("Conteúdo APP:     " + textoAPP);
+            System.out.println("Conteúdo esperado: " + expectedText);
+        } catch (Exception e) {
+            System.err.println("Erro ao validar o conteúdo do elemento com ID " + accessibilityId + ": " + e.getMessage());
+            throw e; // Relança a exceção para garantir que o teste falhe
+        }
+    }
+
     public void vaidarConteudoChar(By by,String conteudo){
         MobileElement element = getDriver().findElement(by);
         StringBuilder textoElemento = new StringBuilder();
@@ -76,6 +101,11 @@ public class BasePage {
     public boolean existeElementoPorTexto(String texto){
         List<MobileElement> elementos = getDriver().findElements(By.xpath("//*[@text='"+texto+"']"));
          return elementos.size() > 0;
+    }
+
+    public boolean existeElementoPorId(String texto){
+        List<MobileElement> elementos = getDriver().findElements(MobileBy.AccessibilityId(texto));
+        return elementos.size() > 0;
     }
 
     public String localizarElementoId (String acessibility){
@@ -150,6 +180,26 @@ public class BasePage {
                 .release()
                 .perform();
     }
+
+/*
+Estrutura de espera explicita, adaptar para qualquer necessidade
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+public void validarConteudoID(String accessibilityId, String expectedText) {
+    try {
+        WebDriverWait wait = new WebDriverWait(getDriver(), 10); // espera de 10 segundos
+        MobileElement element = (MobileElement) wait.until(ExpectedConditions.presenceOfElementLocated(By.id(accessibilityId)));
+        String textoAPP = element.getText();
+        assertEquals(expectedText, textoAPP, "O texto do elemento não corresponde ao esperado.");
+        System.out.println("Conteúdo APP:     " + textoAPP);
+        System.out.println("Conteúdo esperado: " + expectedText);
+    } catch (Exception e) {
+        System.err.println("Erro ao validar o conteúdo do elemento com ID " + accessibilityId + ": " + e.getMessage());
+        throw e; // Relança a exceção para garantir que o teste falhe
+    }
+}
+ */
 
     public String obterTituloAlerta(){
         return obterTexto(By.id("android:id/alertTitle"));

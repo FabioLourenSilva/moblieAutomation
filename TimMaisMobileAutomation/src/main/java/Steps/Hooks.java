@@ -9,7 +9,14 @@ import org.openqa.selenium.TakesScreenshot;
 public class Hooks extends DriveFactory {
     @AfterStep
     public void takeScreenshot(Scenario scenario) {
-        byte[] screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
-        scenario.attach(screenshot, "image/png", scenario.getName());
+//        if (scenario.isFailed()) {
+            byte[] screenshot = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png", scenario.getName());
+//        }
+    }
+
+    @After
+    public void tearDown(){
+        DriveFactory.killDriver();
     }
 }

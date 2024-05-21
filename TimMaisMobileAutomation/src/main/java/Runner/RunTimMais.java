@@ -8,11 +8,17 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "/Users/fabiolourenco/Documents/Automation/TimMais/TimMaisMobileAutomation/src/main/java/Features/LoginTimMais.feature",
         glue = "Steps",
-        tags = "@TEST1",
+        tags = "@regressivo",
 //        dryRun = true,
-        plugin = {"pretty", "html:/Users/fabiolourenco/Documents/Automation/TimMais/TimMaisMobileAutomation/src/main/java/evidencias/evidenciaTimMais-30-03.html"}
+        plugin = {"pretty", "html:/Users/fabiolourenco/Documents/Automation/TimMais/TimMaisMobileAutomation/src/main/java/evidencias/evidenciaTimMais-ios-13-05v2.html"}
 )
 
 public class RunTimMais {
-
+    String so =
+            "android"
+//            "iOS"
+    ;
+    public String getSo() {
+        return so;
+    }
 }
