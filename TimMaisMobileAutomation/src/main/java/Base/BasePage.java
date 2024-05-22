@@ -1,5 +1,6 @@
 package Base;
 
+import Runner.RunTimMais;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
@@ -15,20 +16,38 @@ import static org.junit.Assert.assertEquals;
 
 public class BasePage {
 
+    static String soRunner;
+    static {
+        RunTimMais runTimMais = new RunTimMais();
+        soRunner = runTimMais.getSo();
+    }
 
     public void escrever(By by, String texto){
         getDriver().findElement(by)
                 .sendKeys(texto);
     }
 
+    public void doubleCheckWrite(String xpath,String msisdn){
+        MobileElement element = getDriver().findElement(By.xpath(xpath));
+        String texto = element.getText();
+        if (!texto.equals(element.getAttribute("value"))) {
+            element.clear();
+            escrever(By.xpath(xpath),msisdn);
+        }
+    }
+
 
     public void escreverChar(By by, String texto){
-        getDriver().findElement(by).clear();
         MobileElement element = getDriver().findElement(by);
+        element.clear();
         for (char ch : texto.toCharArray()) {
             element.sendKeys(String.valueOf(ch));
             try {
-                TimeUnit.NANOSECONDS.sleep(111);
+                if (soRunner.equals("android")) {
+                    TimeUnit.MILLISECONDS.sleep(200);
+                } else {
+                    TimeUnit.MILLISECONDS.sleep(1);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -96,13 +115,10 @@ public class BasePage {
         try {
             MobileElement element = getDriver().findElementByAccessibilityId(accessibilityId);
             String textoAPP = element.getText();
-//            assertEquals(expectedText, textoAPP, "");
             assertEquals(expectedText,textoAPP);
-            System.out.println("Conteúdo APP:     " + textoAPP);
-            System.out.println("Conteúdo esperado: " + expectedText);
         } catch (Exception e) {
             System.err.println("Erro ao validar o conteúdo do elemento com ID " + accessibilityId + ": " + e.getMessage());
-            throw e; // Relança a exceção para garantir que o teste falhe
+            throw e;
         }
     }
 

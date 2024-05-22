@@ -32,11 +32,11 @@ public class LoginTimMaisStepDefinitions extends BasePage {
             if (startUse) {
                 clicarId(MobileBy.AccessibilityId("Começar a usar"));
             }
-
-            boolean allow = existeElementoPorTexto("Allow");
-            if (allow) {
-                clicarPorTexto("Allow");
-            }
+            //Necessário para teste em emulador Android
+//            boolean allow = existeElementoPorTexto("Allow");
+//            if (allow) {
+//                clicarPorTexto("Allow");
+//            }
         }
     }
 
@@ -47,7 +47,6 @@ public class LoginTimMaisStepDefinitions extends BasePage {
 
     @When("insiro o msisdn {string}")
     public void insiro_o_msisdn(String msisdn) {
-        base.esperar(200);
         login.addMsisdn(msisdn);
     }
 
@@ -58,6 +57,7 @@ public class LoginTimMaisStepDefinitions extends BasePage {
 
     @When("insiro a senha")
     public void insiro_a_senha() throws InterruptedException {
+        Thread.sleep(500);
         login.inserirSenha();
     }
 
@@ -69,7 +69,6 @@ public class LoginTimMaisStepDefinitions extends BasePage {
     @Then("visualizo home")
     public void visualizo_home() throws InterruptedException {
         login.welcomeHome();
-
     }
 
 }
