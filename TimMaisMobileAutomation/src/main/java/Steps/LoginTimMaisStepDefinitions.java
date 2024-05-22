@@ -18,18 +18,25 @@ public class LoginTimMaisStepDefinitions extends BasePage {
     BaseTest base = new BaseTest();
     DriveFactory drive = new DriveFactory();
 
+    static String soRunner;
+    static {
+        RunTimMais runTimMais = new RunTimMais();
+        soRunner = runTimMais.getSo();
+    }
 
     @Given("acesso o app TIM MAIS e clico no botao comecar a usar")
     public void acesso_o_app_tim_mais() throws InterruptedException {
+        if (soRunner.equals("android")) {
 
-        boolean startUse = existeElementoPorId("Começar a usar");
-        if (startUse) {
-            clicarId(MobileBy.AccessibilityId("Começar a usar"));
-        }
+            boolean startUse = existeElementoPorId("Começar a usar");
+            if (startUse) {
+                clicarId(MobileBy.AccessibilityId("Começar a usar"));
+            }
 
-        boolean allow = existeElementoPorTexto("Allow");
-        if (allow) {
-            clicarPorTexto("Allow");
+            boolean allow = existeElementoPorTexto("Allow");
+            if (allow) {
+                clicarPorTexto("Allow");
+            }
         }
     }
 
@@ -40,7 +47,7 @@ public class LoginTimMaisStepDefinitions extends BasePage {
 
     @When("insiro o msisdn {string}")
     public void insiro_o_msisdn(String msisdn) {
-        base.esperar(600);
+        base.esperar(200);
         login.addMsisdn(msisdn);
     }
 
@@ -50,7 +57,7 @@ public class LoginTimMaisStepDefinitions extends BasePage {
     }
 
     @When("insiro a senha")
-    public void insiro_a_senha() {
+    public void insiro_a_senha() throws InterruptedException {
         login.inserirSenha();
     }
 

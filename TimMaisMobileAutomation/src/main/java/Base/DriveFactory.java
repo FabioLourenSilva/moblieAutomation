@@ -47,7 +47,7 @@ public class DriveFactory  {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             }
 
             else {

@@ -7,27 +7,41 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-
+import java.util.concurrent.TimeUnit;
 import java.time.Duration;
 import java.util.List;
 import static Base.DriveFactory.getDriver;
 import static org.junit.Assert.assertEquals;
 
 public class BasePage {
+
+
     public void escrever(By by, String texto){
         getDriver().findElement(by)
                 .sendKeys(texto);
     }
 
-    public void escreverId(By by, String texto){
-        getDriver().findElement(by)
-                .sendKeys(texto);
+
+    public void escreverChar(By by, String texto){
+        getDriver().findElement(by).clear();
+        MobileElement element = getDriver().findElement(by);
+        for (char ch : texto.toCharArray()) {
+            element.sendKeys(String.valueOf(ch));
+            try {
+                TimeUnit.NANOSECONDS.sleep(111);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+//
+//        String enteredText = element.getAttribute("value");
+//        if (!enteredText.equals(texto)) {
+//            element.clear();
+//            escrever(by, texto);
+//        }
     }
 
-    public void escreverNumero(By by, String numero){
-        getDriver().findElement(by)
-                .sendKeys(numero);
-    }
+
 
     public String obterTexto(By by){
         return getDriver().findElement(by).getText();

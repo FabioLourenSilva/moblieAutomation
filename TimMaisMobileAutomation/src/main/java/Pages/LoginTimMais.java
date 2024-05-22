@@ -51,32 +51,27 @@ public class LoginTimMais extends BasePage {
 
     public void addMsisdn(String msisdn){
         clicarId(By.xpath(msisdnInput));
-        escrever(By.xpath(msisdnInput),msisdn);
-
+        escreverChar(By.xpath(msisdnInput),msisdn);
     }
 
     public void continuarButton(){
         clicar(continuarButton);
     }
 
-    public void inserirSenha(){
+    public void inserirSenha() throws InterruptedException {
         clicarId((MobileBy) MobileBy.AccessibilityId(passwordInput));
-        escreverId((MobileBy) MobileBy.AccessibilityId(passwordInput),"0000");
+        escrever((MobileBy) MobileBy.AccessibilityId(passwordInput),"1234");
 //        clicar(manterMe);
-//        clicar(By.xpath(passwordInput));
-//        escrever(By.xpath(passwordInput),"0000");
+
     }
 
     public void welcomeHome() throws InterruptedException {
-        Thread.sleep(100);
         if (existeElementoPorId("Pular")){
             clicarId(MobileBy.AccessibilityId(pularOnboarding));
-            Thread.sleep(100);
         }
         if (existeElementoPorId("Pular")){
             clicarId(MobileBy.AccessibilityId(pularTutorial));
         }
-        base.esperar(100);
         validarConteudoID("+Vantagens","+Vantagens");
     }
 
