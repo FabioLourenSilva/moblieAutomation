@@ -44,6 +44,10 @@ public class BasePage {
     public void clickElement(String id){
         getDriver().findElementById(id).click();
     }
+
+    public void clickElementXpath(String xpath){
+        getDriver().findElementById(String.valueOf(By.xpath(xpath))).click();
+    }
     public void clicarEntrar(){
          getDriver().findElementByAccessibilityId("Entrar").click();
     }

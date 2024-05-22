@@ -15,8 +15,8 @@ import org.junit.runner.RunWith;
 
 public class RunTimMais {
     String so =
-            "android"
-//            "iOS"
+//            "android"
+            "iOS"
     ;
     public String getSo() {
         return so;

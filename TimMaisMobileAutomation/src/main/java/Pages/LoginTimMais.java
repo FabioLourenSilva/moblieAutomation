@@ -30,10 +30,10 @@ public class LoginTimMais extends BasePage {
         RunTimMais runTimMais = new RunTimMais();
         soRunner = runTimMais.getSo();
         if (soRunner.equals("android")){
-            passwordInput = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.EditText";
+            passwordInput = "Senha app Meu TIM";
         }
         else {
-            passwordInput = "//XCUIElementTypeSecureTextField[@name=\"Senha app Meu TIM";
+            passwordInput = "Senha app Meu TIM";
         }
     }
 
@@ -41,8 +41,8 @@ public class LoginTimMais extends BasePage {
 
     By continuarButton = By.xpath("//android.widget.Button[@content-desc=\"Continuar\"]");
 
-    By pularOnboarding = By.xpath("//android.widget.Button[@content-desc=\"Pular\"]");
-    By pularTutorial = By.xpath("//android.widget.Button[@content-desc=\"Pular\"]");
+    String pularOnboarding = "Pular";
+    String pularTutorial = "Pular";
 
     By manterMe = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.CheckBox");
 
@@ -60,20 +60,24 @@ public class LoginTimMais extends BasePage {
     }
 
     public void inserirSenha(){
-//        clicarId((MobileBy) MobileBy.AccessibilityId(passwordInput));
-//        escreverId((MobileBy) MobileBy.AccessibilityId(passwordInput),"0000");
+        clicarId((MobileBy) MobileBy.AccessibilityId(passwordInput));
+        escreverId((MobileBy) MobileBy.AccessibilityId(passwordInput),"0000");
 //        clicar(manterMe);
-        clicar(By.xpath(passwordInput));
-        escrever(By.xpath(passwordInput),"0000");
+//        clicar(By.xpath(passwordInput));
+//        escrever(By.xpath(passwordInput),"0000");
     }
 
     public void welcomeHome() throws InterruptedException {
-        Thread.sleep(1500);
-        clicar(pularOnboarding);
-        Thread.sleep(300);
-        clicar(pularTutorial);
-        base.esperar(1500);
-//        validarConteudoID("Destaques","D e s t a q u e s");
+        Thread.sleep(100);
+        if (existeElementoPorId("Pular")){
+            clicarId(MobileBy.AccessibilityId(pularOnboarding));
+            Thread.sleep(100);
+        }
+        if (existeElementoPorId("Pular")){
+            clicarId(MobileBy.AccessibilityId(pularTutorial));
+        }
+        base.esperar(100);
+        validarConteudoID("+Vantagens","+Vantagens");
     }
 
 

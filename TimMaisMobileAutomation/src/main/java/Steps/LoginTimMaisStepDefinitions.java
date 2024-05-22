@@ -4,6 +4,7 @@ import Base.BasePage;
 import Base.BaseTest;
 import Base.DriveFactory;
 import Pages.LoginTimMais;
+import Runner.RunTimMais;
 import io.appium.java_client.MobileBy;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -17,11 +18,12 @@ public class LoginTimMaisStepDefinitions extends BasePage {
     BaseTest base = new BaseTest();
     DriveFactory drive = new DriveFactory();
 
+
     @Given("acesso o app TIM MAIS e clico no botao comecar a usar")
     public void acesso_o_app_tim_mais() throws InterruptedException {
 
-        boolean starUse = existeElementoPorId("Começar a usar");
-        if (starUse) {
+        boolean startUse = existeElementoPorId("Começar a usar");
+        if (startUse) {
             clicarId(MobileBy.AccessibilityId("Começar a usar"));
         }
 
@@ -34,11 +36,11 @@ public class LoginTimMaisStepDefinitions extends BasePage {
     @When("clico no botao Entrar no TIM MAIS")
     public void clico_no_botao() {
         clicarId((MobileBy) MobileBy.AccessibilityId("Entrar no TIM MAIS"));
-        base.esperar(300);
     }
 
     @When("insiro o msisdn {string}")
     public void insiro_o_msisdn(String msisdn) {
+        base.esperar(600);
         login.addMsisdn(msisdn);
     }
 

@@ -53,13 +53,14 @@ public class DriveFactory  {
             else {
                 DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
                 desiredCapabilities.setCapability("appium:platformName", "iOS");
-                desiredCapabilities.setCapability("appium:deviceName", "iPhone 13 Pro Max");
+                desiredCapabilities.setCapability("appium:deviceName", "iPhone de Fabio");
                 desiredCapabilities.setCapability("appium:automationName", "XCUITest");
-                desiredCapabilities.setCapability("appium:udid", "2E74968F-8C50-421C-A5F1-91616D1CB34C");
-//                desiredCapabilities.setCapability("appium:app", "/Users/fabiolourenco/Downloads/base_app5.ipa");
-                desiredCapabilities.setCapability("appium:bundleId", "br.com.timbrasil.timmais.dev");
+                desiredCapabilities.setCapability("appium:udid", "00008030-001619C00138402E");
+//                desiredCapabilities.setCapability("appium:app", "/Users/fabiolourenco/Downloads/base_app6.ipa");
+                desiredCapabilities.setCapability("appium:bundleId", "br.com.timbrasil.timmais");
                 desiredCapabilities.setCapability("appium:xcodeOrgId", "C773E24UZ4");
                 desiredCapabilities.setCapability("appium:xcodeSigningId", "iPhone Developer");
+                desiredCapabilities.setCapability("appium:autoAcceptAlerts", true);
 
                 try {
                     URL appiumServerURL = new URL("http://127.0.0.1:4723/wd/hub");
@@ -68,7 +69,7 @@ public class DriveFactory  {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
-                driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+                driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             }
 
 
