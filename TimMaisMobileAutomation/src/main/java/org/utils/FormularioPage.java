@@ -60,7 +60,7 @@ public class FormularioPage extends BasePage {
     }
 
     public void validarTexto(By by, String texto){
-        vaidarConteudo(by, texto);
+        validarConteudo(by, texto);
     }
 
 }

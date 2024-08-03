@@ -1,6 +1,9 @@
 package Base;
 
 import Runner.RunTimMais;
+import appium_flutter_driver.FlutterFinder;
+import appium_flutter_driver.finder.FlutterElement;
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
@@ -8,19 +11,67 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.interactions.Actions;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.time.Duration;
 import java.util.List;
 import static Base.DriveFactory.getDriver;
 import static org.junit.Assert.assertEquals;
-
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 public class BasePage {
+
+    WebDriverWait wait = new WebDriverWait(getDriver(), 240);
+
+    FlutterFinder find = new FlutterFinder(getDriver());
 
     static String soRunner;
     static {
         RunTimMais runTimMais = new RunTimMais();
         soRunner = runTimMais.getSo();
     }
+
+
+    // Funciton flutter by key
+
+    private FlutterElement waitForVisibility(String value, int timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), timeoutInSeconds);
+        return wait.until(driver -> {
+            FlutterElement element = find.byValueKey(value);
+            return (element != null && element.isDisplayed()) ? element : null;
+        });
+    }
+
+    private FlutterElement waitForClickability(String value, int timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), timeoutInSeconds);
+        return wait.until(driver -> {
+            FlutterElement element = find.byValueKey(value);
+            return (element != null && element.isEnabled() && element.isDisplayed()) ? element : null;
+        });
+    }
+    public String findFlutterElement(String value, int time) {
+        FlutterElement element = waitForVisibility(value, time);
+        return element.getText();
+    }
+
+    public void escreverInFlutter(String value, String text, int time) {
+        FlutterElement element = waitForVisibility(value, time);
+        element.sendKeys(text);
+    }
+
+    public void clickFlutterElement(String value, int time) {
+        FlutterElement element = waitForClickability(value, time);
+        element.click();
+    }
+
+    // End integration function flutter
+
+
 
     public void escrever(By by, String texto){
         getDriver().findElement(by)
@@ -69,9 +120,17 @@ public class BasePage {
     public void clicarId(By by){
         getDriver().findElement(by).click();
     }
+    public void clicarPorCoordenadas(int x, int y) {
+        // Criar uma instância da classe Actions
+        Actions actions = new Actions(getDriver());
 
-    public void clicar(By by){
-        getDriver().findElement(by).click();
+        // Mover o cursor para as coordenadas especificadas e clicar
+        actions.moveByOffset( x,  y).click().perform();
+    }
+
+    public void clicar(By by) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), 120);
+        wait.until(ExpectedConditions.presenceOfElementLocated(by)).click();
     }
 
     public void clickElement(String id){
@@ -81,6 +140,10 @@ public class BasePage {
     public void clickElementXpath(String xpath){
         getDriver().findElementById(String.valueOf(By.xpath(xpath))).click();
     }
+    public void clickElementid(String id){
+        getDriver().findElementById(String.valueOf(MobileBy.id(id))).click();
+    }
+
     public void clicarEntrar(){
          getDriver().findElementByAccessibilityId("Entrar").click();
     }
@@ -103,7 +166,8 @@ public class BasePage {
         String textoAPP = String.valueOf(texto.getAttribute(atributo).equals(conteudo));
     }
 
-    public void vaidarConteudo(By by,String conteudo){
+    public void validarConteudo(By by,String conteudo){
+        wait.until(ExpectedConditions.presenceOfElementLocated(by));
         MobileElement texto = getDriver().findElement(by);
         String textoAPP = texto.getText();
         assertEquals(conteudo,textoAPP);
@@ -132,9 +196,20 @@ public class BasePage {
         }
     }
 
+    public void waitElement(By by, int time){
+        WebDriverWait wait = new WebDriverWait(getDriver(),time);
+        wait.until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
     public boolean existeElementoPorTexto(String texto){
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@text='" + texto + "']")));
         List<MobileElement> elementos = getDriver().findElements(By.xpath("//*[@text='"+texto+"']"));
          return elementos.size() > 0;
+    }
+
+    public boolean existeElementoPorXpath(String texto){
+        List<MobileElement> elementos = getDriver().findElements(By.xpath(texto));
+        return elementos.size() > 0;
     }
 
     public boolean existeElementoPorId(String texto){
@@ -147,6 +222,12 @@ public class BasePage {
         return acessibility;
     }
 
+    public String extractText(By by){
+        MobileElement elemento = getDriver().findElement(by);
+        String text = elemento.getText();
+        return text;
+    }
+
     public void clicarAcessib(String by){
         getDriver().findElementByAccessibilityId(by).click();
     }
@@ -156,8 +237,8 @@ public class BasePage {
         touchAction.tap(PointOption.point(x,y)).perform();
     }
 
-    public void scrollDown(){
-        scroll(0.9,0.1);
+    public void scrollDown(double x, double y ){
+        scroll(x,y);
     }
 
     public void scrollUp(){
@@ -171,20 +252,32 @@ public class BasePage {
         swipe(0.9,0.1);
     }
 
-    public void scroll(double inicio, double fim){
+    public void scroll(double inicio, double fim) {
+        // Obter o tamanho da tela
         Dimension size = getDriver().manage().window().getSize();
+        int x = size.width / 2; // Ponto médio horizontal
+        int startY = (int) (size.height * inicio); // Ponto inicial vertical
+        int endY = (int) (size.height * fim); // Ponto final vertical
 
-        int x = size.width / 2;
+        // Imprimir coordenadas para depuração
+        System.out.println("Screen size: " + size);
+        System.out.println("Start point: (" + x + ", " + startY + ")");
+        System.out.println("End point: (" + x + ", " + endY + ")");
 
-        int start_y = (int) (size.height * inicio);
-        int end_y = (int) (size.height * fim);
-        new TouchAction(getDriver())
-                .press(PointOption.point(x,start_y))
+        // Criar e executar a ação de scroll
+        new TouchAction<>(getDriver())
+                .press(PointOption.point(x, startY))
                 .waitAction(WaitOptions.waitOptions(Duration.ofMillis(500)))
-                .moveTo(PointOption.point(x,end_y))
+                .moveTo(PointOption.point(x, endY))
                 .release()
                 .perform();
     }
+
+    public void scrollMove() {
+
+    }
+
+
 
     public void swipe(double inicio, double fim){
         Dimension size = getDriver().manage().window().getSize();

@@ -10,13 +10,14 @@ import org.junit.runner.RunWith;
         glue = "Steps",
         tags = "@regressivo",
 //        dryRun = true,
-        plugin = {"pretty", "html:/Users/fabiolourenco/Documents/Automation/TimMais/TimMaisMobileAutomation/src/main/java/evidencias/evidenciaTimMais-ios-13-05v2.html"}
+        plugin = {"pretty", "html:/Users/fabiolourenco/Documents/Automation/TimMais/TimMaisMobileAutomation/src/main/java/evidencias/evidenciaTimMais-SSO-2907v2.html"}
 )
 
 public class RunTimMais {
     String so =
-//            "android"
-            "iOS"
+            "android"
+//            "iOS"
+//            "webAndroid"
     ;
     public String getSo() {
         return so;
